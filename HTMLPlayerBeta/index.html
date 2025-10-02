@@ -3,8 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Default theme loaded first for instant styling and first load -->
+  
+  <!-- Load user's saved theme and dark mode preference ASAP -->
+  <script>
+    (function() {
+      // Check if we need to load a different theme
+      const savedTheme = localStorage.getItem('selected-color-theme');
+      if (savedTheme && savedTheme !== 'Blue') {
+        const themeLink = document.getElementById('theme-link');
+        themeLink.href = `./src/themes/${savedTheme}/${savedTheme}.theme.css`;
+      }
+      
+      // Apply dark mode immediately if needed
+      const savedMode = localStorage.getItem('themeMode') || 'auto';
+      if (savedMode === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (savedMode === 'auto') {
+        // Check system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark');
+        }
+      }
+    })();
+  </script>
+  
   <title>HTMLPlayer</title>
-  <script type="module" crossorigin src="./assets/index-BGG-kU17.js"></script>
+  <script type="module" crossorigin src="./assets/index-CNiJk71d.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/vendor-react-c5ypKtDW.js">
   <link rel="modulepreload" crossorigin href="./assets/vendor-ui-B98q2OPX.js">
   <link rel="modulepreload" crossorigin href="./assets/vendor-icons-DTlEvRem.js">
@@ -12,13 +37,22 @@
   <link rel="modulepreload" crossorigin href="./assets/vendor-i18n-Dm6y2ykY.js">
   <link rel="modulepreload" crossorigin href="./assets/vendor-audio-DS29YJ-h.js">
   <link rel="modulepreload" crossorigin href="./assets/vendor-uppy-CPLIuk2f.js">
-  <link rel="modulepreload" crossorigin href="./assets/visualizers-RU1YfLqw.js">
-  <link rel="stylesheet" crossorigin href="./assets/index-Cn0Ho6kb.css">
+  <link rel="modulepreload" crossorigin href="./assets/visualizers-c9XIT9Hk.js">
+  <link rel="stylesheet" crossorigin href="./assets/index-Dq3yeM-0.css">
 <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script>
 <meta name="theme-color" content="#00bfff">
 <link rel="icon" href="./favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="./apple-touch-icon-180x180.png"></head>
 <body>
+  <!-- Loading screen shown before React loads -->
+  <div id="loading-screen" class="loadingScreen">
+    <div class="loadingContent">
+      <div class="loadingSpinner"></div>
+      <h1 class="loadingTitle">HTMLPlayer</h1>
+      <p class="loadingText">Loading...</p>
+    </div>
+  </div>
+
   <div id="root"></div>
 
   <!-- Eruda dev console -->
