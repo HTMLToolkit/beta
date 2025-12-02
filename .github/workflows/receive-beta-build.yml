@@ -23,7 +23,8 @@ jobs:
           curl -L -H "Authorization: token ${TOKEN}" -o htmlplayer-build.zip "${ARTIFACT_URL}"
           unzip htmlplayer-build.zip -d temp-build
           unzip temp-build/htmlplayer-build.zip -d temp-build
-
+          rm temp-build/htmlplayer-build.zip  # Remove the inner zip so only build files are moved
+      
       - name: Clear and copy to subfolder
         run: |
           SUBFOLDER="${{ github.event.client_payload.subfolder }}"
@@ -32,6 +33,8 @@ jobs:
           rm -rf "${SUBFOLDER}"/*
           mkdir -p "${SUBFOLDER}"
           mv temp-build/* "${SUBFOLDER}/"
+          echo "Contents after move:"
+          ls -la "${SUBFOLDER}/"  # Debug: list contents
 
       - name: Commit and push
         run: |
