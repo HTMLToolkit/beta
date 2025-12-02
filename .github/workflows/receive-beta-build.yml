@@ -20,8 +20,8 @@ jobs:
         run: |
           ARTIFACT_URL="${{ github.event.client_payload.artifact_url }}"
           TOKEN="${{ github.event.client_payload.token }}"
-          curl -L -H "Authorization: token ${TOKEN}" -o build.zip "${ARTIFACT_URL}"
-          unzip build.zip -d temp-build
+          curl -L -H "Authorization: token ${TOKEN}" -o htmlplayer-build.zip "${ARTIFACT_URL}"
+          unzip htmlplayer-build.zip -d temp-build
 
       - name: Clear and copy to subfolder
         run: |
