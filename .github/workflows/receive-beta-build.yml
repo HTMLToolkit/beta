@@ -18,34 +18,78 @@ jobs:
 
       - name: Download and extract build
         run: |
+          set -euo pipefail
           ARTIFACT_URL="${{ github.event.client_payload.artifact_url }}"
           TOKEN="${{ secrets.BETA_PAT_TOKEN }}"
+
+          echo "Downloading artifact from: ${ARTIFACT_URL}"
           curl -L -H "Authorization: token ${TOKEN}" -o htmlplayer-build.zip "${ARTIFACT_URL}"
-          unzip htmlplayer-build.zip -d temp-build
-          unzip temp-build/htmlplayer-build.zip -d temp-build
-          rm temp-build/htmlplayer-build.zip  # Remove the inner zip so only build files are moved
-      
-      - name: Clear and copy to subfolder
+
+          echo "Unzipping outer artifact..."
+          mkdir -p temp-build
+          unzip -q htmlplayer-build.zip -d temp-build
+
+          echo "Unzipping inner build zip..."
+          unzip -q temp-build/htmlplayer-build.zip -d temp-build
+
+          # Optional: keep workspace clean
+          rm -f temp-build/htmlplayer-build.zip htmlplayer-build.zip
+
+          echo "Resulting structure under temp-build:"
+          find temp-build -maxdepth 3 -type d -print
+
+      - name: Replace subfolder with Build/dist contents
         run: |
+          set -euo pipefail
           SUBFOLDER="${{ github.event.client_payload.subfolder }}"
-          echo "Copying to ${SUBFOLDER}"
-          ls "${SUBFOLDER}"
-          rm -rf "${SUBFOLDER}"/*
+
+          echo "Target subfolder: ${SUBFOLDER}"
+
+          # Ensure subfolder exists
           mkdir -p "${SUBFOLDER}"
-          mv temp-build/* "${SUBFOLDER}/"
-          echo "Contents after move:"
-          ls -la "${SUBFOLDER}/"  # Debug: list contents
+
+          echo "Before replace, contents of ${SUBFOLDER}:"
+          ls -la "${SUBFOLDER}" || true
+
+          # Clear subfolder (including hidden files, but keep the dir itself)
+          # The printf + xargs pattern avoids errors when the glob is empty.
+          if [ -d "${SUBFOLDER}" ]; then
+            echo "Clearing existing contents of ${SUBFOLDER}"
+            find "${SUBFOLDER}" -mindepth 1 -maxdepth 1 -print0 | xargs -0 rm -rf --
+          fi
+
+          # Sanity check: ensure source path exists
+          if [ ! -d "temp-build/Build/dist" ]; then
+            echo "ERROR: temp-build/Build/dist does not exist"
+            echo "Actual temp-build structure:"
+            find temp-build -maxdepth 5 -print
+            exit 1
+          fi
+
+          echo "Copying new build contents from temp-build/Build/dist into ${SUBFOLDER}"
+          # Move contents of dist/* directly into SUBFOLDER
+          shopt -s dotglob nullglob
+          mv temp-build/Build/dist/* "${SUBFOLDER}/"
+
+          echo "After replace, contents of ${SUBFOLDER}:"
+          ls -la "${SUBFOLDER}"
 
       - name: Commit and push
         run: |
+          set -euo pipefail
           SUBFOLDER="${{ github.event.client_payload.subfolder }}"
           SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
+
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
           git add "${SUBFOLDER}"
+
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
+            echo "Changes detected; committing..."
+            git status
             git commit -m "Deploy ${SOURCE_REPO} build to ${SUBFOLDER}"
             git push origin main
           fi
