@@ -26,6 +26,7 @@ jobs:
       - name: Clear and copy to subfolder
         run: |
           SUBFOLDER="${{ github.event.client_payload.subfolder }}"
+          echo "Copying to ${SUBFOLDER}"
           rm -rf "${SUBFOLDER}"/*
           mkdir -p "${SUBFOLDER}"
           mv temp-build/* "${SUBFOLDER}/"
