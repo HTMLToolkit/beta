@@ -19,7 +19,7 @@ jobs:
       - name: Download and extract build
         run: |
           ARTIFACT_URL="${{ github.event.client_payload.artifact_url }}"
-          TOKEN="${{ github.event.client_payload.token }}"
+          TOKEN="${{ secrets.BETA_PAT_TOKEN }}"
           curl -L -H "Authorization: token ${TOKEN}" htmlplayer-build.zip "${ARTIFACT_URL}"
           unzip htmlplayer-build.zip -d temp-build
 
