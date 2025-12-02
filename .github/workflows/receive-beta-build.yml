@@ -27,6 +27,7 @@ jobs:
         run: |
           SUBFOLDER="${{ github.event.client_payload.subfolder }}"
           echo "Copying to ${SUBFOLDER}"
+          ls "${SUBFOLDER}"
           rm -rf "${SUBFOLDER}"/*
           mkdir -p "${SUBFOLDER}"
           mv temp-build/* "${SUBFOLDER}/"
