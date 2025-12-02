@@ -30,7 +30,6 @@ jobs:
           file htmlplayer-build.zip  # Should show "Zip archive data" if valid
           
       - name: Clear and copy to subfolder
-        working-directory: temp-build
         run: |
           SUBFOLDER="${{ github.event.client_payload.subfolder }}"
           echo "Copying to ${SUBFOLDER}"
