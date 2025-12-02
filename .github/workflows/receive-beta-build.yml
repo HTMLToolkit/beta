@@ -22,13 +22,8 @@ jobs:
           TOKEN="${{ secrets.BETA_PAT_TOKEN }}"
           curl -L -H "Authorization: token ${TOKEN}" -o htmlplayer-build.zip "${ARTIFACT_URL}"
           unzip htmlplayer-build.zip -d temp-build
+          unzip temp-build/htmlplayer-build.zip -d temp-build
 
-      - name: Debug download
-        working-directory: temp-build
-        run: |
-          ls -la htmlplayer-build.zip
-          file htmlplayer-build.zip  # Should show "Zip archive data" if valid
-          
       - name: Clear and copy to subfolder
         run: |
           SUBFOLDER="${{ github.event.client_payload.subfolder }}"
