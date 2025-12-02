@@ -1,0 +1,48 @@
+name: Deploy Build from Source
+
+on:
+  repository_dispatch:
+    types: [deploy-build]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout beta repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download and extract build
+        run: |
+          SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
+          RELEASE_TAG="${{ github.event.client_payload.release_tag }}"
+          ASSET_NAME="${{ github.event.client_payload.asset_name }}"
+          ASSET_URL="https://github.com/${SOURCE_REPO}/releases/download/${RELEASE_TAG}/${ASSET_NAME}"
+          curl -L -o build.zip "${ASSET_URL}"
+          unzip build.zip -d temp-build
+
+      - name: Clear and copy to subfolder
+        run: |
+          SUBFOLDER="${{ github.event.client_payload.subfolder }}"
+          rm -rf "${SUBFOLDER}"/*
+          mkdir -p "${SUBFOLDER}"
+          mv temp-build/* "${SUBFOLDER}/"
+
+      - name: Commit and push
+        run: |
+          SUBFOLDER="${{ github.event.client_payload.subfolder }}"
+          SOURCE_REPO="${{ github.event.client_payload.source_repo }}"
+          RELEASE_TAG="${{ github.event.client_payload.release_tag }}"
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add "${SUBFOLDER}"
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Deploy ${SOURCE_REPO} build to ${SUBFOLDER} from release ${RELEASE_TAG}"
+            git push origin main
+          fi
