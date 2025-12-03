@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTMLVisualizer</title>
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script src="https://unpkg.com/he@1.2.0/he.js"></script>
+    <script>eruda.init();</script>
+    <script type="module" crossorigin src="./assets/index-P64M1Dav.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-66H5jJnx.css">
+  <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script>
+<meta name="theme-color" content="#00bfff">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="./apple-touch-icon-180x180.png"></head>
+  <body>
+    <h1>HTMLVisualizer</h1>
+  </header>
+  <main>
+    <section>
+      <input type="file" id="fileInput" accept=".html" aria-label="Upload HTML file for visualization">
+      <div id="loading" role="status">Processing file...</div>
+      <div id="progressContainer">
+        <div id="progressBar"></div>
+      </div>
+    </section>
+    <section id="container">
+      <div id="graph-container">
+        <svg></svg>
+      </div>
+      <aside id="details-panel" aria-label="Node details panel">
+        <h3>Node Details</h3>
+        <pre id="details-content"></pre>
+      </aside>
+    </section>
+  </main>
+</body>
+
+</html>
