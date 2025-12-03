@@ -32,11 +32,8 @@ jobs:
           echo "Unzipping inner build zip..."
           unzip -q temp-build/htmlplayer-build.zip -d temp-build
 
-          # Optional: keep workspace clean
+          # keep workspace clean
           rm -f temp-build/htmlplayer-build.zip htmlplayer-build.zip
-
-          echo "Resulting structure under temp-build:"
-          find temp-build -maxdepth 3 -type d -print
 
       - name: Replace subfolder with Build/dist contents
         run: |
@@ -47,9 +44,6 @@ jobs:
 
           # Ensure subfolder exists
           mkdir -p "${SUBFOLDER}"
-
-          echo "Before replace, contents of ${SUBFOLDER}:"
-          ls -la "${SUBFOLDER}" || true
 
           # Clear subfolder (including hidden files, but keep the dir itself)
           # The printf + xargs pattern avoids errors when the glob is empty.
@@ -70,9 +64,6 @@ jobs:
           # Move contents of dist/* directly into SUBFOLDER
           shopt -s dotglob nullglob
           mv temp-build/Build/dist/* "${SUBFOLDER}/"
-
-          echo "After replace, contents of ${SUBFOLDER}:"
-          ls -la "${SUBFOLDER}"
 
       - name: Commit and push
         run: |
