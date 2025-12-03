@@ -6,6 +6,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: "deploy-beta"
@@ -58,7 +60,7 @@ jobs:
           # clean up zips
           rm -f "${OUTER_ZIP}"
           rm -f "${INNER_ZIP}"
-  
+
       - name: Replace subfolder with Build/dist contents
         run: |
           set -euo pipefail
@@ -129,7 +131,7 @@ jobs:
           # List directories, exclude .github, and create JSON array
           folders=$(ls -d */ 2>/dev/null | sed 's|/$||' | grep -v '^\.github$' || true)
           if [ -n "$folders" ]; then
-            json_array=$(echo "$folders" | jq -R .| jq -s .)
+            json_array=$(echo "$folders" | jq -R . | jq -s .)
             echo "$json_array" > links.json
           else
             echo "[]" > links.json
@@ -144,3 +146,31 @@ jobs:
             git commit -m "Update links.json with current folders"
             git push
           fi
+
+  deploy-pages:
+    needs: generate-links
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Pull latest changes
+        run: git pull origin main
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
