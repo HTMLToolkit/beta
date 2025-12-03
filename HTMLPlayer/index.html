@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Fallback Metadata -->
+  <meta name="description" content="A modern music player interface with playlists, song management, and an amazing visualizer." />
+  <meta property="og:image" content="https://nellowtcs.me/assets/icon-1024.png" />
+  <meta property="og:description" content="A modern music player interface with playlists, song management, and an amazing visualizer." />
+  <meta property="og:title" content="HTMLPlayer (beta)" />
+
+  <!-- Default theme loaded first for instant styling and first load -->
+  
+  <!-- Load user's saved theme and dark mode preference ASAP -->
+  <script>
+    (function() {
+      // Apply dark mode immediately if needed (before theme switching)
+      const savedMode = localStorage.getItem('themeMode') || 'auto';
+      if (savedMode === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (savedMode === 'auto') {
+        // Check system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark');
+        }
+      }
+    })();
+  </script>
+  
+  <title>HTMLPlayer</title>
+  <script type="module" crossorigin src="./assets/index-DaRCti-h.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/vendor-react-c5ypKtDW.js">
+  <link rel="modulepreload" crossorigin href="./assets/vendor-ui-Br6e9zSa.js">
+  <link rel="modulepreload" crossorigin href="./assets/vendor-i18n-BBsUE1v-.js">
+  <link rel="modulepreload" crossorigin href="./assets/vendor-utils-CJcuHqKu.js">
+  <link rel="modulepreload" crossorigin href="./assets/vendor-audio-BqCqqooE.js">
+  <link rel="modulepreload" crossorigin href="./assets/vendor-uppy-DPCC4q7y.js">
+  <link rel="modulepreload" crossorigin href="./assets/visualizers-D-qNxZFn.js">
+  <link rel="stylesheet" crossorigin href="./assets/index-DZ1-OIEW.css">
+<link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script>
+<meta name="theme-color" content="#00bfff">
+<link rel="icon" href="./favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="./apple-touch-icon-180x180.png"></head>
+<body>
+  <!-- Loading screen shown before React loads -->
+  <div id="loading-screen" class="loadingScreen">
+    <div class="loadingContent">
+      <div class="loadingSpinner"></div>
+      <h1 class="loadingTitle">HTMLPlayer</h1>
+      <p class="loadingText" id="loading-text">Loading the loading message...</p>
+
+    </div>
+  </div>
+
+  <div id="root"></div>
+
+  <!-- Load fun loading messages -->
+  <script>
+    (function() {
+      // Detect user's language (first two letters)
+      const userLang = (navigator.language || 'en').substring(0, 2);
+      
+      // Map supported languages
+      const supportedLangs = { 'en': 'en', 'fr': 'fr' };
+      const lang = supportedLangs[userLang] || 'en';
+      
+      // Load the appropriate language file
+      fetch(`./locales/${lang}/loading-messages-${lang}.json`)
+        .then(response => response.json())
+        .then(messages => {
+          // Pick a random message
+          const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+          // Update the loading text
+          const loadingText = document.getElementById('loading-text');
+          if (loadingText) {
+            loadingText.textContent = randomMessage;
+          }
+        })
+        .catch(() => {
+          // Fallback to English if loading fails
+          console.warn('Failed to load loading messages, using fallback');
+        });
+    })();
+  </script>
+
+</body>
+</html>
