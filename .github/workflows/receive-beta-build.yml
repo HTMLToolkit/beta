@@ -98,6 +98,6 @@ jobs:
           else
             echo "Changes detected; committing..."
             git status
-            git commit -m "Deploy ${SOURCE_REPO} build to ${SUBFOLDER}"
+            git commit -m "Deploy beta ${SUBFOLDER} build."
             git push origin main
           fi
