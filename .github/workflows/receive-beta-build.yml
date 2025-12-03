@@ -16,54 +16,77 @@ jobs:
         with:
           ref: main
 
-      - name: Download and extract build
+      - name: Download artifact
         run: |
           set -euo pipefail
           ARTIFACT_URL="${{ github.event.client_payload.artifact_url }}"
           TOKEN="${{ secrets.BETA_PAT_TOKEN }}"
 
           echo "Downloading artifact from: ${ARTIFACT_URL}"
-          curl -L -H "Authorization: token ${TOKEN}" -o htmlplayer-build.zip "${ARTIFACT_URL}"
+          curl -L -H "Authorization: token ${TOKEN}" -o outer-artifact.zip "${ARTIFACT_URL}"
 
-          echo "Unzipping outer artifact..."
+      - name: Extract artifact(s)
+        run: |
+          set -euo pipefail
+
           mkdir -p temp-build
-          unzip -q htmlplayer-build.zip -d temp-build
 
-          echo "Unzipping inner build zip..."
-          unzip -q temp-build/htmlplayer-build.zip -d temp-build
+          echo "Unzipping outer artifact to temp-build..."
+          unzip -q outer-artifact.zip -d temp-build
 
-          # keep workspace clean
-          rm -f temp-build/htmlplayer-build.zip htmlplayer-build.zip
+          # Find any zip inside temp-build (inner/packaged zip). Support any name.
+          INNER_ZIP="$(find temp-build -maxdepth 2 -type f -name '*.zip' -print -quit || true)"
 
-      - name: Replace subfolder with Build/dist contents
+          if [ -n "${INNER_ZIP:-}" ]; then
+            echo "Found inner zip: ${INNER_ZIP}"
+            unzip -q "${INNER_ZIP}" -d temp-build
+            rm -f "${INNER_ZIP}"
+          else
+            echo "No inner zip found under temp-build; maybe outer zip directly contained files."
+          fi
+
+          # Clean up the downloaded outer zip
+          rm -f outer-artifact.zip
+
+      - name: Place Build/dist contents into subfolder
         run: |
           set -euo pipefail
           SUBFOLDER="${{ github.event.client_payload.subfolder }}"
-
           echo "Target subfolder: ${SUBFOLDER}"
 
           # Ensure subfolder exists
           mkdir -p "${SUBFOLDER}"
 
-          # Clear subfolder (including hidden files, but keep the dir itself)
-          # The printf + xargs pattern avoids errors when the glob is empty.
-          if [ -d "${SUBFOLDER}" ]; then
-            echo "Clearing existing contents of ${SUBFOLDER}"
-            find "${SUBFOLDER}" -mindepth 1 -maxdepth 1 -print0 | xargs -0 rm -rf --
+          # Clear subfolder including hidden files (but keep the dir)
+          echo "Clearing existing contents of ${SUBFOLDER}"
+          find "${SUBFOLDER}" -mindepth 1 -maxdepth 1 -print0 | xargs -0 --no-run-if-empty rm -rf --
+
+          # Determine source dist path
+          # Look for Build/dist under temp-build
+          DIST_DIR="$(find temp-build -type d -path '*/Build/dist' -print -quit || true)"
+
+          # If not found, also look for any directory named 'dist'
+          if [ -z "${DIST_DIR:-}" ]; then
+            DIST_DIR="$(find temp-build -type d -name 'dist' -print -quit || true)"
           fi
 
-          # Sanity check: ensure source path exists
-          if [ ! -d "temp-build/Build/dist" ]; then
-            echo "ERROR: temp-build/Build/dist does not exist"
-            echo "Actual temp-build structure:"
-            find temp-build -maxdepth 5 -print
+          if [ -z "${DIST_DIR:-}" ]; then
+            echo "ERROR: could not find a 'Build/dist' or 'dist' directory under temp-build:"
+            find temp-build -maxdepth 4 -print
             exit 1
           fi
 
-          echo "Copying new build contents from temp-build/Build/dist into ${SUBFOLDER}"
-          # Move contents of dist/* directly into SUBFOLDER
+          echo "Using dist source: ${DIST_DIR}"
+
+          # Move contents of dist into subfolder (preserve dotfiles)
           shopt -s dotglob nullglob
-          mv temp-build/Build/dist/* "${SUBFOLDER}/"
+          files=( "${DIST_DIR}"/* )
+          if [ ${#files[@]} -gt 0 ]; then
+            echo "Moving ${#files[@]} items from ${DIST_DIR} -> ${SUBFOLDER}"
+            mv "${files[@]}" "${SUBFOLDER}/"
+          else
+            echo "Warning: ${DIST_DIR} is empty; nothing to move."
+          fi
 
       - name: Commit and push
         run: |
@@ -74,13 +97,14 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-          git add "${SUBFOLDER}"
+          # Stage only the subfolder (including deletions)
+          git add -A "${SUBFOLDER}"
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
             echo "Changes detected; committing..."
-            git status
+            git status --porcelain
             git commit -m "Deploy ${SOURCE_REPO} build to ${SUBFOLDER}"
             git push origin main
           fi
