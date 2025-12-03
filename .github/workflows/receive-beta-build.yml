@@ -16,77 +16,80 @@ jobs:
         with:
           ref: main
 
-      - name: Download artifact
+      - name: Download and extract build
         run: |
           set -euo pipefail
+
           ARTIFACT_URL="${{ github.event.client_payload.artifact_url }}"
           TOKEN="${{ secrets.BETA_PAT_TOKEN }}"
+          ZIP_NAME="${{ github.event.client_payload.zip_name }}"
 
-          echo "Downloading artifact from: ${ARTIFACT_URL}"
-          curl -L -H "Authorization: token ${TOKEN}" -o outer-artifact.zip "${ARTIFACT_URL}"
+          echo "Downloading artifact:"
+          echo "  URL: ${ARTIFACT_URL}"
+          echo "  ZIP_NAME: ${ZIP_NAME}"
 
-      - name: Extract artifact(s)
-        run: |
-          set -euo pipefail
+          # Fallback name if for some reason zip_name is empty
+          OUTER_ZIP="${ZIP_NAME:-build-artifact.zip}"
 
+          curl -L -H "Authorization: token ${TOKEN}" -o "${OUTER_ZIP}" "${ARTIFACT_URL}"
+
+          echo "Unzipping outer artifact into temp-build..."
           mkdir -p temp-build
+          unzip -q "${OUTER_ZIP}" -d temp-build
 
-          echo "Unzipping outer artifact to temp-build..."
-          unzip -q outer-artifact.zip -d temp-build
+          echo "Looking for inner build zip inside temp-build..."
+          INNER_ZIP="$(find temp-build -maxdepth 2 -type f -name '*.zip' | head -n 1 || true)"
 
-          # Find any zip inside temp-build (inner/packaged zip). Support any name.
-          INNER_ZIP="$(find temp-build -maxdepth 2 -type f -name '*.zip' -print -quit || true)"
-
-          if [ -n "${INNER_ZIP:-}" ]; then
-            echo "Found inner zip: ${INNER_ZIP}"
-            unzip -q "${INNER_ZIP}" -d temp-build
-            rm -f "${INNER_ZIP}"
-          else
-            echo "No inner zip found under temp-build; maybe outer zip directly contained files."
-          fi
-
-          # Clean up the downloaded outer zip
-          rm -f outer-artifact.zip
-
-      - name: Place Build/dist contents into subfolder
-        run: |
-          set -euo pipefail
-          SUBFOLDER="${{ github.event.client_payload.subfolder }}"
-          echo "Target subfolder: ${SUBFOLDER}"
-
-          # Ensure subfolder exists
-          mkdir -p "${SUBFOLDER}"
-
-          # Clear subfolder including hidden files (but keep the dir)
-          echo "Clearing existing contents of ${SUBFOLDER}"
-          find "${SUBFOLDER}" -mindepth 1 -maxdepth 1 -print0 | xargs -0 --no-run-if-empty rm -rf --
-
-          # Determine source dist path
-          # Look for Build/dist under temp-build
-          DIST_DIR="$(find temp-build -type d -path '*/Build/dist' -print -quit || true)"
-
-          # If not found, also look for any directory named 'dist'
-          if [ -z "${DIST_DIR:-}" ]; then
-            DIST_DIR="$(find temp-build -type d -name 'dist' -print -quit || true)"
-          fi
-
-          if [ -z "${DIST_DIR:-}" ]; then
-            echo "ERROR: could not find a 'Build/dist' or 'dist' directory under temp-build:"
-            find temp-build -maxdepth 4 -print
+          if [ -z "${INNER_ZIP}" ]; then
+            echo "ERROR: No inner zip found under temp-build"
+            echo "Tree under temp-build:"
+            find temp-build -maxdepth 5 -print
             exit 1
           fi
 
-          echo "Using dist source: ${DIST_DIR}"
+          echo "Found inner zip: ${INNER_ZIP}"
+          echo "Unzipping inner build zip..."
+          unzip -q "${INNER_ZIP}" -d temp-build
 
-          # Move contents of dist into subfolder (preserve dotfiles)
-          shopt -s dotglob nullglob
-          files=( "${DIST_DIR}"/* )
-          if [ ${#files[@]} -gt 0 ]; then
-            echo "Moving ${#files[@]} items from ${DIST_DIR} -> ${SUBFOLDER}"
-            mv "${files[@]}" "${SUBFOLDER}/"
-          else
-            echo "Warning: ${DIST_DIR} is empty; nothing to move."
+          # Optional: clean up zips
+          rm -f "${OUTER_ZIP}"
+          rm -f "${INNER_ZIP}"
+
+          echo "Resulting structure under temp-build:"
+          find temp-build -maxdepth 4 -type d -print
+
+      - name: Replace subfolder with Build/dist contents
+        run: |
+          set -euo pipefail
+          SUBFOLDER="${{ github.event.client_payload.subfolder }}"
+
+          echo "Target subfolder: ${SUBFOLDER}"
+
+          mkdir -p "${SUBFOLDER}"
+
+          echo "Before replace, contents of ${SUBFOLDER}:"
+          ls -la "${SUBFOLDER}" || true
+
+          # Clear subfolder (including hidden files) but keep the dir itself
+          if [ -d "${SUBFOLDER}" ]; then
+            echo "Clearing existing contents of ${SUBFOLDER}"
+            find "${SUBFOLDER}" -mindepth 1 -maxdepth 1 -print0 | xargs -0 rm -rf -- || true
           fi
+
+          # Ensure we have Build/dist in temp-build
+          if [ ! -d "temp-build/Build/dist" ]; then
+            echo "ERROR: temp-build/Build/dist does not exist"
+            echo "Actual temp-build structure:"
+            find temp-build -maxdepth 6 -print
+            exit 1
+          fi
+
+          echo "Copying Build/dist contents into ${SUBFOLDER}"
+          shopt -s dotglob nullglob
+          mv temp-build/Build/dist/* "${SUBFOLDER}/"
+
+          echo "After replace, contents of ${SUBFOLDER}:"
+          ls -la "${SUBFOLDER}"
 
       - name: Commit and push
         run: |
@@ -97,14 +100,13 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-          # Stage only the subfolder (including deletions)
-          git add -A "${SUBFOLDER}"
+          git add "${SUBFOLDER}"
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
             echo "Changes detected; committing..."
-            git status --porcelain
+            git status
             git commit -m "Deploy ${SOURCE_REPO} build to ${SUBFOLDER}"
             git push origin main
           fi
