@@ -51,13 +51,10 @@ jobs:
           echo "Unzipping inner build zip..."
           unzip -q "${INNER_ZIP}" -d temp-build
 
-          # Optional: clean up zips
+          # clean up zips
           rm -f "${OUTER_ZIP}"
           rm -f "${INNER_ZIP}"
-
-          echo "Resulting structure under temp-build:"
-          find temp-build -maxdepth 4 -type d -print
-
+  
       - name: Replace subfolder with Build/dist contents
         run: |
           set -euo pipefail
@@ -66,9 +63,6 @@ jobs:
           echo "Target subfolder: ${SUBFOLDER}"
 
           mkdir -p "${SUBFOLDER}"
-
-          echo "Before replace, contents of ${SUBFOLDER}:"
-          ls -la "${SUBFOLDER}" || true
 
           # Clear subfolder (including hidden files) but keep the dir itself
           if [ -d "${SUBFOLDER}" ]; then
@@ -88,9 +82,6 @@ jobs:
           shopt -s dotglob nullglob
           mv temp-build/Build/dist/* "${SUBFOLDER}/"
 
-          echo "After replace, contents of ${SUBFOLDER}:"
-          ls -la "${SUBFOLDER}"
-
       - name: Commit and push
         run: |
           set -euo pipefail
@@ -100,7 +91,7 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-          git add "${SUBFOLDER}"
+          git add *
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
