@@ -107,6 +107,7 @@ jobs:
           fi
 
   generate-links:
+    needs: deploy
     runs-on: ubuntu-latest
 
     steps:
