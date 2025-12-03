@@ -113,13 +113,23 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Pull latest changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git remote set-url origin https://x-access-token:${{ secrets.BETA_PAT_TOKEN }}@github.com/${{ github.repository }}.git
+          git pull origin main
 
       - name: List folders and create JSON
         run: |
           # List directories, exclude .github, and create JSON array
           folders=$(ls -d */ 2>/dev/null | sed 's|/$||' | grep -v '^\.github$' || true)
           if [ -n "$folders" ]; then
-            json_array=$(echo "$folders" | jq -R . | jq -s .)
+            json_array=$(echo "$folders" | jq -R .| jq -s .)
             echo "$json_array" > links.json
           else
             echo "[]" > links.json
@@ -127,12 +137,6 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          
-          # Use PAT for authentication to trigger Pages builds
-          git remote set-url origin https://x-access-token:${{ secrets.BETA_PAT_TOKEN }}@github.com/${{ github.repository }}.git
-          
           git add links.json
           if git diff --staged --quiet; then
             echo "No changes to commit"
