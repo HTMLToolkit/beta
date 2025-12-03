@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  receive:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout beta repo
@@ -108,8 +108,8 @@ jobs:
             git push origin main
           fi
 
-  generate-links:
-    needs: deploy
+  linker:
+    needs: receive
     runs-on: ubuntu-latest
 
     steps:
@@ -147,8 +147,8 @@ jobs:
             git push
           fi
 
-  deploy-pages:
-    needs: generate-links
+  deploy:
+    needs: linker
     runs-on: ubuntu-latest
     environment:
       name: github-pages
