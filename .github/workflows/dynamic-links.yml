@@ -6,8 +6,7 @@ on:
       - main
   workflow_dispatch:
 
-permissions:
-  write
+permissions: write
 
 jobs:
   generate-links:
