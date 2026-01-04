@@ -1,4 +1,4 @@
-const r=`/* Monochrome */
+const r = `/* Monochrome */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #ffffff, #cccccc);
@@ -207,5 +207,7 @@ const r=`/* Monochrome */
   --shadow-focus:
     0 0 0 2px hsla(0, 0%, 40%, 0.25), 0 1px 2px hsla(0, 0%, 0%, 0.1);
 }
-`;export{r as default};
-//# sourceMappingURL=Monochrome.theme-DOsJJxIa.js.map
+`;
+export {
+  r as default
+};

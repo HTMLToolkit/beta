@@ -1,4 +1,4 @@
-const r=`/* Red */
+const r = `/* Red */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #b22222, #ff6347);
@@ -207,5 +207,7 @@ const r=`/* Red */
   --shadow-focus:
     0 0 0 2px hsla(0, 75%, 35%, 0.25), 0 1px 2px hsla(0, 55%, 0%, 0.1);
 }
-`;export{r as default};
-//# sourceMappingURL=Red.theme-AulFC9SM.js.map
+`;
+export {
+  r as default
+};

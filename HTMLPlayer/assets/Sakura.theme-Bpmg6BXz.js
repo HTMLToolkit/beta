@@ -1,4 +1,4 @@
-const r=`/* Sakura */
+const r = `/* Sakura */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #ffb7c5, #9cd7c5);
@@ -208,5 +208,7 @@ const r=`/* Sakura */
   --shadow-focus:
     0 0 0 2px hsla(340, 65%, 55%, 0.25), 0 1px 2px hsla(330, 15%, 0%, 0.1);
 }
-`;export{r as default};
-//# sourceMappingURL=Sakura.theme-Bpmg6BXz.js.map
+`;
+export {
+  r as default
+};

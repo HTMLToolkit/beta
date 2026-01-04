@@ -1,4 +1,4 @@
-const r=`/* Obsidian */
+const r = `/* Obsidian */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #1e1e2f, #2a2a3c);
@@ -203,5 +203,7 @@ const r=`/* Obsidian */
   --shadow-focus:
     0 0 0 2px hsla(260, 25%, 35%, 0.25), 0 1px 2px hsla(0, 0%, 0%, 0.05);
 }
-`;export{r as default};
-//# sourceMappingURL=Obsidian.theme-zMPRVcHq.js.map
+`;
+export {
+  r as default
+};

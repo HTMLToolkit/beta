@@ -1,4 +1,4 @@
-const n=`/* Aurora */
+const n = `/* Aurora */
 :root {
   /* Theme */
   --themegradient: linear-gradient(
@@ -339,5 +339,7 @@ const n=`/* Aurora */
     0 0 0 2px color-mix(in oklab, transparent 75%, oklch(75% 0.12 200)),
     0 1px 2px color-mix(in oklab, transparent 90%, #000000);
 }
-`;export{n as default};
-//# sourceMappingURL=Aurora.theme-dQfQr6e1.js.map
+`;
+export {
+  n as default
+};

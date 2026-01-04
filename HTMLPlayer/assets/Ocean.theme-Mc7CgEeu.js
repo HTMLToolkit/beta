@@ -1,4 +1,4 @@
-const r=`/* Mystical */
+const r = `/* Mystical */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #a0e9fd, #74c0fc);
@@ -208,5 +208,7 @@ const r=`/* Mystical */
   --shadow-focus:
     0 0 0 2px hsla(190, 80%, 45%, 0.25), 0 1px 2px hsla(210, 15%, 0%, 0.1);
 }
-`;export{r as default};
-//# sourceMappingURL=Ocean.theme-Mc7CgEeu.js.map
+`;
+export {
+  r as default
+};

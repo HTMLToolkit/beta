@@ -1,4 +1,4 @@
-const r=`/* Terracotta */
+const r = `/* Terracotta */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #e07a5f, #3d8160);
@@ -204,5 +204,7 @@ const r=`/* Terracotta */
   --shadow-focus:
     0 0 0 2px hsla(14, 50%, 45%, 0.25), 0 1px 2px hsla(20, 15%, 0%, 0.1);
 }
-`;export{r as default};
-//# sourceMappingURL=Terracotta.theme-A3vStbGt.js.map
+`;
+export {
+  r as default
+};

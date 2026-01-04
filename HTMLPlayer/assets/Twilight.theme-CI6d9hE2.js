@@ -1,4 +1,4 @@
-const n=`/* Twilight */
+const n = `/* Twilight */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #9b59b6, #e91e63);
@@ -212,5 +212,7 @@ const n=`/* Twilight */
   --shadow-focus:
     0 0 0 2px hsla(290, 70%, 25%, 0.25), 0 1px 2px hsla(290, 45%, 0%, 0.1);
 }
-`;export{n as default};
-//# sourceMappingURL=Twilight.theme-CI6d9hE2.js.map
+`;
+export {
+  n as default
+};

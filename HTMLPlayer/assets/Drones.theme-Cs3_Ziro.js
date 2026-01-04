@@ -1,4 +1,4 @@
-const n=`/* Drones */
+const n = `/* Drones */
 :root {
   /* Theme */
   --themegradient: url("MurderDrones.jpg");
@@ -232,5 +232,7 @@ const n=`/* Drones */
 body::before {
   animation: var(--themegradient-animation) !important;
 }
-`;export{n as default};
-//# sourceMappingURL=Drones.theme-Cs3_Ziro.js.map
+`;
+export {
+  n as default
+};

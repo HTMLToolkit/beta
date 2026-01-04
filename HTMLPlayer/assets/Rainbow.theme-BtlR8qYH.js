@@ -1,4 +1,4 @@
-const n=`/* Rainbow */
+const n = `/* Rainbow */
 :root {
   /* Theme */
   --themegradient: linear-gradient(
@@ -251,5 +251,7 @@ const n=`/* Rainbow */
   --shadow-focus:
     0 0 0 2px hsla(240, 100%, 70%, 0.4), 0 1px 2px hsla(300, 100%, 60%, 0.2);
 }
-`;export{n as default};
-//# sourceMappingURL=Rainbow.theme-BtlR8qYH.js.map
+`;
+export {
+  n as default
+};

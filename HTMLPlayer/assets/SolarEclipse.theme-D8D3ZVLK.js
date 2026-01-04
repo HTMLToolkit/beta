@@ -1,4 +1,4 @@
-const n=`/* Solar Eclipse Theme */
+const n = `/* Solar Eclipse Theme */
 :root {
   /* Theme */
   --themegradient: radial-gradient(
@@ -228,5 +228,7 @@ const n=`/* Solar Eclipse Theme */
   --shadow-focus:
     0 0 0 2px hsla(38, 100%, 65%, 0.5), 0 0 16px hsla(60, 100%, 70%, 0.4);
 }
-`;export{n as default};
-//# sourceMappingURL=SolarEclipse.theme-D8D3ZVLK.js.map
+`;
+export {
+  n as default
+};

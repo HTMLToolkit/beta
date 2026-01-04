@@ -1,4 +1,4 @@
-const n=`/* Frosty */
+const n = `/* Frosty */
 :root {
   /* Theme */
   --themegradient: linear-gradient(
@@ -232,5 +232,7 @@ const n=`/* Frosty */
   --shadow-focus:
     0 0 0 2px hsla(195, 60%, 40%, 0.25), 0 1px 2px hsla(190, 20%, 0%, 0.1);
 }
-`;export{n as default};
-//# sourceMappingURL=Frosty.theme-B3Tdqsid.js.map
+`;
+export {
+  n as default
+};

@@ -1,4 +1,4 @@
-const r=`/* Forest Theme */
+const r = `/* Forest Theme */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #4ade80, #166534);
@@ -208,5 +208,7 @@ const r=`/* Forest Theme */
   --shadow-focus:
     0 0 0 2px hsla(142, 65%, 45%, 0.25), 0 1px 2px hsla(120, 25%, 0%, 0.1);
 }
-`;export{r as default};
-//# sourceMappingURL=Forest.theme-Dp6pI7Sb.js.map
+`;
+export {
+  r as default
+};
