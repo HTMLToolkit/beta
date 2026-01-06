@@ -1,4 +1,4 @@
-const n = `/* Cyberpunk Theme */
+const n=`/* Cyberpunk Theme */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #00ffff, #ff00ff, #ffff00);
@@ -220,7 +220,5 @@ const n = `/* Cyberpunk Theme */
   --shadow-focus:
     0 0 0 2px hsla(180, 100%, 60%, 0.5), 0 1px 2px hsla(300, 100%, 60%, 0.2);
 }
-`;
-export {
-  n as default
-};
+`;export{n as default};
+//# sourceMappingURL=Cyberpunk.theme-DEEADx6H.js.map

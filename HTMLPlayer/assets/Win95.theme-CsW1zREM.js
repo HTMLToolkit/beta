@@ -1,4 +1,4 @@
-const n = `/* Win95 */
+const n=`/* Win95 */
 :root {
   /* Theme */
   --themegradient: conic-gradient(
@@ -251,14 +251,12 @@ body {
 body::before {
   content: "";
   position: fixed;
-  inset: -50%; /* extend beyond viewport so edges don\u2019t get cut */
+  inset: -50%; /* extend beyond viewport so edges don’t get cut */
   z-index: -1;
   background: var(--themegradient);
   background-blend-mode: normal;
   animation: rotate 20s linear infinite;
   transform-origin: center center;
 }
-`;
-export {
-  n as default
-};
+`;export{n as default};
+//# sourceMappingURL=Win95.theme-CsW1zREM.js.map

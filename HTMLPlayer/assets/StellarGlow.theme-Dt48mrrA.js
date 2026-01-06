@@ -1,4 +1,4 @@
-const r = `/* Stellar Glow */
+const r=`/* Stellar Glow */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #8a4af3, #1e2a44);
@@ -208,7 +208,5 @@ const r = `/* Stellar Glow */
   --shadow-focus:
     0 0 0 2px hsla(260, 60%, 45%, 0.25), 0 1px 2px hsla(260, 15%, 0%, 0.1);
 }
-`;
-export {
-  r as default
-};
+`;export{r as default};
+//# sourceMappingURL=StellarGlow.theme-Dt48mrrA.js.map

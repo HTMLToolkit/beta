@@ -1,4 +1,4 @@
-const n = `/* BlackHole Theme */
+const n=`/* BlackHole Theme */
 :root {
   /* Theme */
   --themegradient: linear-gradient(
@@ -226,7 +226,5 @@ const n = `/* BlackHole Theme */
   --shadow-focus:
     0 0 0 2px hsla(210, 60%, 35%, 0.4), 0 0 8px hsla(350, 85%, 60%, 0.3);
 }
-`;
-export {
-  n as default
-};
+`;export{n as default};
+//# sourceMappingURL=BlackHole.theme-DQeGo3A8.js.map

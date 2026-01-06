@@ -1,4 +1,4 @@
-const r = `/* Orange */
+const r=`/* Orange */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #ffd27f, #ff9c5e);
@@ -204,7 +204,5 @@ const r = `/* Orange */
   --shadow-focus:
     0 0 0 2px hsla(30, 90%, 45%, 0.25), 0 1px 2px hsla(25, 50%, 0%, 0.1);
 }
-`;
-export {
-  r as default
-};
+`;export{r as default};
+//# sourceMappingURL=Orange.theme-B_sybolh.js.map

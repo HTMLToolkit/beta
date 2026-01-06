@@ -1,4 +1,4 @@
-const r = `/* Yellow */
+const r=`/* Yellow */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #f1c40f, #f39c12);
@@ -208,7 +208,5 @@ const r = `/* Yellow */
   --shadow-focus:
     0 0 0 2px hsla(45, 70%, 25%, 0.25), 0 1px 2px hsla(45, 55%, 0%, 0.1);
 }
-`;
-export {
-  r as default
-};
+`;export{r as default};
+//# sourceMappingURL=Yellow.theme-DWUF0BLg.js.map

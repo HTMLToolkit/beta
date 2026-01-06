@@ -1,4 +1,4 @@
-const n = `/* Supernova Theme */
+const n=`/* Supernova Theme */
 :root {
   /* Theme */
   --themegradient: linear-gradient(
@@ -236,7 +236,5 @@ const n = `/* Supernova Theme */
   --shadow-focus:
     0 0 0 2px hsla(16, 100%, 65%, 0.4), 0 0 12px hsla(45, 100%, 70%, 0.3);
 }
-`;
-export {
-  n as default
-};
+`;export{n as default};
+//# sourceMappingURL=Sun.theme-DMqKFPFC.js.map

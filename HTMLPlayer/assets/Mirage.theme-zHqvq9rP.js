@@ -1,4 +1,4 @@
-const n = `/* Mirage */
+const n=`/* Mirage */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #ff9a8b, #ff6a88);
@@ -204,7 +204,5 @@ const n = `/* Mirage */
   --shadow-focus:
     0 0 0 2px hsla(290, 70%, 45%, 0.25), 0 1px 2px hsla(290, 50%, 0%, 0.1);
 }
-`;
-export {
-  n as default
-};
+`;export{n as default};
+//# sourceMappingURL=Mirage.theme-zHqvq9rP.js.map

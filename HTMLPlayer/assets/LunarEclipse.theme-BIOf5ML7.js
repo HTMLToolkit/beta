@@ -1,4 +1,4 @@
-const n = `/* Lunar Eclipse Theme */
+const n=`/* Lunar Eclipse Theme */
 :root {
   /* Theme */
   --themegradient: radial-gradient(
@@ -226,7 +226,5 @@ const n = `/* Lunar Eclipse Theme */
   --shadow-focus:
     0 0 0 2px hsla(15, 70%, 50%, 0.4), 0 0 10px hsla(0, 70%, 65%, 0.3);
 }
-`;
-export {
-  n as default
-};
+`;export{n as default};
+//# sourceMappingURL=LunarEclipse.theme-BIOf5ML7.js.map

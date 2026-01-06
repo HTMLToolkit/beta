@@ -1,4 +1,4 @@
-const r = `/* Verdant */
+const r=`/* Verdant */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #a8e6cf, #37966f);
@@ -212,7 +212,5 @@ const r = `/* Verdant */
   --shadow-focus:
     0 0 0 2px hsla(145, 50%, 30%, 0.25), 0 1px 2px hsla(120, 20%, 0%, 0.1);
 }
-`;
-export {
-  r as default
-};
+`;export{r as default};
+//# sourceMappingURL=Verdant.theme-RrFVjel9.js.map

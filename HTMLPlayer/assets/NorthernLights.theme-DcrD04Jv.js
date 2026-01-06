@@ -1,4 +1,4 @@
-const n = `/* Aurora Theme */
+const n=`/* Aurora Theme */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #10b981, #3b82f6, #8b5cf6, #ec4899);
@@ -222,7 +222,5 @@ const n = `/* Aurora Theme */
   --shadow-focus:
     0 0 0 2px hsla(217, 91%, 65%, 0.25), 0 1px 2px hsla(220, 30%, 0%, 0.1);
 }
-`;
-export {
-  n as default
-};
+`;export{n as default};
+//# sourceMappingURL=NorthernLights.theme-DcrD04Jv.js.map

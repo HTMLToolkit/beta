@@ -1,4 +1,4 @@
-const n = `/* Nebula Theme */
+const n=`/* Nebula Theme */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #8b5cf6, #06b6d4, #ec4899);
@@ -219,7 +219,5 @@ const n = `/* Nebula Theme */
   --shadow-focus:
     0 0 0 2px hsla(262, 83%, 65%, 0.25), 0 1px 2px hsla(262, 25%, 0%, 0.1);
 }
-`;
-export {
-  n as default
-};
+`;export{n as default};
+//# sourceMappingURL=Nebula.theme-B9u8M96o.js.map

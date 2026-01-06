@@ -1,4 +1,4 @@
-const r = `/* Lumenis */
+const r=`/* Lumenis */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #ff7e5f, #6a11cb);
@@ -206,7 +206,5 @@ const r = `/* Lumenis */
   --shadow-focus:
     0 0 0 2px hsla(15, 85%, 60%, 0.25), 0 1px 2px hsla(280, 15%, 0%, 0.1);
 }
-`;
-export {
-  r as default
-};
+`;export{r as default};
+//# sourceMappingURL=Lumenis.theme-4HnaujBt.js.map

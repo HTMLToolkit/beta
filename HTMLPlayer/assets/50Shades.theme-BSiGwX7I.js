@@ -1,4 +1,4 @@
-const n = `/* 50 Shades of Blue */
+const n=`/* 50 Shades of Blue */
 :root {
   /* Theme */
   --themegradient: linear-gradient(
@@ -412,7 +412,5 @@ const n = `/* 50 Shades of Blue */
   --shadow-focus:
     0 0 0 2px hsla(200, 80%, 35%, 0.25), 0 1px 2px hsla(220, 20%, 0%, 0.1);
 }
-`;
-export {
-  n as default
-};
+`;export{n as default};
+//# sourceMappingURL=50Shades.theme-BSiGwX7I.js.map
