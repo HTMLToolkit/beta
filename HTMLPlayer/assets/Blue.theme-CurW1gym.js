@@ -1,4 +1,4 @@
-const r=`/* Blue */
+const r = `/* Blue */
 :root {
   /* Theme */
   --themegradient: linear-gradient(135deg, #00bfff, #1e3a8a);
@@ -208,5 +208,7 @@ const r=`/* Blue */
   --shadow-focus:
     0 0 0 2px hsla(215, 70%, 60%, 0.25), 0 1px 2px hsla(220, 15%, 0%, 0.1);
 }
-`;export{r as default};
-//# sourceMappingURL=Blue.theme-CurW1gym.js.map
+`;
+export {
+  r as default
+};

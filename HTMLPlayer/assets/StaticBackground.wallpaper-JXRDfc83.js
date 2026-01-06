@@ -1,2 +1,6 @@
-import{j as e}from"./vendor-ui-WM1JXJ50.js";import"./vendor-react-qkC6yhPU.js";const d=({currentSong:t,playbackState:i})=>e.jsx("div",{style:{position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"linear-gradient(135deg, #0caddeff 0%, #09e8adff 100%)",zIndex:-1,display:"flex",alignItems:"center",justifyContent:"center",color:"white",fontSize:"2rem",textAlign:"center",opacity:i?.isPlaying?1:.7,transition:"opacity 0.3s ease"},children:t?e.jsxs("div",{children:[e.jsx("h1",{children:t.title}),e.jsxs("p",{children:[t.artist," - ",t.album]})]}):e.jsx("h1",{children:"HTMLPlayer"})});export{d as default};
-//# sourceMappingURL=StaticBackground.wallpaper-JXRDfc83.js.map
+import { j as e } from "./vendor-ui-WM1JXJ50.js";
+import "./vendor-react-qkC6yhPU.js";
+const d = ({ currentSong: t, playbackState: i }) => e.jsx("div", { style: { position: "fixed", top: 0, left: 0, width: "100%", height: "100%", background: "linear-gradient(135deg, #0caddeff 0%, #09e8adff 100%)", zIndex: -1, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: "2rem", textAlign: "center", opacity: (i == null ? void 0 : i.isPlaying) ? 1 : 0.7, transition: "opacity 0.3s ease" }, children: t ? e.jsxs("div", { children: [e.jsx("h1", { children: t.title }), e.jsxs("p", { children: [t.artist, " - ", t.album] })] }) : e.jsx("h1", { children: "HTMLPlayer" }) });
+export {
+  d as default
+};

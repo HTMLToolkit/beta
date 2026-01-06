@@ -1,19 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Fallback Metadata -->
-  <meta name="description" content="A modern music player interface with playlists, song management, and an amazing visualizer." />
+  <meta name="description"
+    content="A modern music player interface with playlists, song management, and an amazing visualizer." />
   <meta property="og:image" content="https://nellowtcs.me/assets/icon-1024.png" />
-  <meta property="og:description" content="A modern music player interface with playlists, song management, and an amazing visualizer." />
+  <meta property="og:description"
+    content="A modern music player interface with playlists, song management, and an amazing visualizer." />
   <meta property="og:title" content="HTMLPlayer (beta)" />
 
+  <script>
+    (function () {
+      // Vite will replace these exact strings during build
+      const isSingleFile = false;
+      const iconData = null;
+
+      if (isSingleFile && iconData) {
+        const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+        link.type = 'image/png';
+        link.rel = 'icon';
+        link.href = iconData;
+        document.head.appendChild(link);
+
+        const ogImage = document.querySelector('meta[property="og:image"]') || document.createElement('meta');
+        ogImage.setAttribute('property', 'og:image');
+        ogImage.content = iconData;
+        document.head.appendChild(ogImage);
+      }
+    })();
+  </script>
+
   <!-- Default theme loaded first for instant styling and first load -->
-  
+
   <!-- Load user's saved theme and dark mode preference ASAP -->
   <script>
-    (function() {
+    (function () {
       // Apply dark mode immediately if needed (before theme switching)
       const savedMode = localStorage.getItem('themeMode') || 'auto';
       if (savedMode === 'dark') {
@@ -26,17 +50,17 @@
       }
     })();
   </script>
-  
+
   <title>HTMLPlayer</title>
-  <script type="module" crossorigin src="/beta/HTMLPlayer/assets/index-7q6t7-qN.js"></script>
+  <script type="module" crossorigin src="/beta/HTMLPlayer/assets/index-CztcH-Ue.js"></script>
   <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-react-qkC6yhPU.js">
   <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-ui-WM1JXJ50.js">
   <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-uppy-DO2nUz3Y.js">
-  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-i18n-N9T6RXyI.js">
+  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-i18n-Bcp1p0pK.js">
   <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-utils-jeg-bMVB.js">
-  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-audio-DGEglWet.js">
-  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/visualizers-BycwIsiO.js">
-  <link rel="stylesheet" crossorigin href="/beta/HTMLPlayer/assets/index-D97wfCED.css">
+  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-audio-CPMNR9Qe.js">
+  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/visualizers-_cJ_mCVx.js">
+  <link rel="stylesheet" crossorigin href="/beta/HTMLPlayer/assets/index-RPwcfck-.css">
 <link rel="manifest" href="/beta/HTMLPlayer/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/beta/HTMLPlayer/registerSW.js"></script>
 <meta name="theme-color" content="#00bfff">
 <link rel="icon" href="/beta/HTMLPlayer/favicon.ico" sizes="48x48">
@@ -56,30 +80,29 @@
 
   <!-- Load fun loading messages -->
   <script>
-    (function() {
-      // Detect user's language (first two letters)
+    (function () {
       const userLang = (navigator.language || 'en').substring(0, 2);
-      
-      // Map supported languages
-      const supportedLangs = { 'en': 'en', 'fr': 'fr' };
-      const lang = supportedLangs[userLang] || 'en';
-      
-      // Load the appropriate language file
-      fetch(`./locales/${lang}/loading-messages-${lang}.json`)
-        .then(response => response.json())
-        .then(messages => {
-          // Pick a random message
+      const lang = (userLang === 'fr') ? 'fr' : 'en';
+      const loadingText = document.getElementById('loading-text');
+
+      const updateText = (messages) => {
+        if (loadingText && messages) {
           const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-          // Update the loading text
-          const loadingText = document.getElementById('loading-text');
-          if (loadingText) {
-            loadingText.textContent = randomMessage;
-          }
-        })
-        .catch(() => {
-          // Fallback to English if loading fails
-          console.warn('Failed to load loading messages, using fallback');
-        });
+          loadingText.textContent = randomMessage;
+        }
+      };
+
+      // Statically replaced by the custom plugin
+      const inlined = null;
+
+      if (inlined) {
+        updateText(inlined[lang] || inlined.en);
+      } else {
+        fetch(`./locales/${lang}/loading-messages-${lang}.json`)
+          .then(res => res.json())
+          .then(updateText)
+          .catch(() => console.warn('Loading messages failed.'));
+      }
     })();
   </script>
 
