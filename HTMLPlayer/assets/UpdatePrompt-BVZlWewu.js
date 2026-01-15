@@ -1,6 +1,6 @@
 import { r as _, j as s } from "./vendor-ui-WM1JXJ50.js";
 import { _ as W, u as v, __tla as __tla_0 } from "./vendor-i18n-WLbSf5LT.js";
-import { I as R, B as x, __tla as __tla_1 } from "./index-DuNJAlab.js";
+import { I as R, B as x, __tla as __tla_1 } from "./index-DOxjGOnc.js";
 import "./vendor-react-qkC6yhPU.js";
 import "./vendor-uppy-CguFdeWP.js";
 import "./vendor-utils-jeg-bMVB.js";
