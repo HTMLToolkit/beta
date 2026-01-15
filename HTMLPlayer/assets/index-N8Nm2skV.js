@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Bootstrap.icons-CUSYQcQF.js","assets/iconBase-C7gREx1u.js","assets/vendor-ui-WM1JXJ50.js","assets/vendor-react-qkC6yhPU.js","assets/css-gg.icons-B6pRdqbA.js","assets/MaterialDesign.icons-GQ926zqy.js","assets/Phosphor.icons-ByOaZePO.js","assets/RemixIcon.icons-DMiEMcX3.js","assets/SimpleLineIcons.icons-DsoM47tP.js","assets/TablerIcons.icons-2xlnnKTO.js","assets/vendor-icons-TO2v1PTS.js","assets/Clock.wallpaper-BsjELoQi.js","assets/GeometricPatterns.wallpaper-BoMwjRLy.js","assets/MusicViz.wallpaper-B-2HrCrA.js","assets/Particles.wallpaper-tNiuq6B5.js","assets/StarryNight.wallpaper-D-rxXUMD.js","assets/StaticBackground.wallpaper-JXRDfc83.js","assets/Waves.wallpaper-D2h8s6rJ.js","assets/Weather.wallpaper-DyMluOlm.js","assets/refloWavHelper-CFVSRtC7.js","assets/vendor-flo-rsMfiFqa.js","assets/floProcessor-D6X2FKGo.js","assets/UpdatePrompt-DWSTiM3e.js","assets/vendor-i18n-Bcp1p0pK.js","assets/vendor-uppy-DO2nUz3Y.js","assets/vendor-utils-jeg-bMVB.js","assets/vendor-audio-CPMNR9Qe.js","assets/visualizers-_cJ_mCVx.js","assets/UpdatePrompt-ClYSwnXr.css"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Bootstrap.icons-CUSYQcQF.js","assets/iconBase-C7gREx1u.js","assets/vendor-ui-WM1JXJ50.js","assets/vendor-react-qkC6yhPU.js","assets/css-gg.icons-B6pRdqbA.js","assets/MaterialDesign.icons-GQ926zqy.js","assets/Phosphor.icons-ByOaZePO.js","assets/RemixIcon.icons-DMiEMcX3.js","assets/SimpleLineIcons.icons-DsoM47tP.js","assets/TablerIcons.icons-2xlnnKTO.js","assets/vendor-icons-TO2v1PTS.js","assets/Clock.wallpaper-BsjELoQi.js","assets/GeometricPatterns.wallpaper-BoMwjRLy.js","assets/MusicViz.wallpaper-B-2HrCrA.js","assets/Particles.wallpaper-tNiuq6B5.js","assets/StarryNight.wallpaper-D-rxXUMD.js","assets/StaticBackground.wallpaper-JXRDfc83.js","assets/Waves.wallpaper-D2h8s6rJ.js","assets/Weather.wallpaper-DyMluOlm.js","assets/refloWavHelper-CFVSRtC7.js","assets/vendor-flo-rsMfiFqa.js","assets/floProcessor-D6X2FKGo.js","assets/UpdatePrompt-BN4DGzBm.js","assets/vendor-i18n-Bcp1p0pK.js","assets/vendor-uppy-DO2nUz3Y.js","assets/vendor-utils-jeg-bMVB.js","assets/vendor-audio-CPMNR9Qe.js","assets/visualizers-_cJ_mCVx.js","assets/UpdatePrompt-ClYSwnXr.css"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __typeError = (msg) => {
   throw TypeError(msg);
@@ -24675,7 +24675,7 @@ this.ifd0Offset: ${this.ifd0Offset}, file.byteLength: ${n.byteLength}`), n.tiff 
   function wM() {
     if (typeof window > "u") return null;
     const s = new URLSearchParams(window.location.search), n = s.get("title") || void 0, i = s.get("text") || void 0, r = s.get("url") || void 0;
-    return n || i ? {
+    return n || i || r ? {
       files: [],
       title: n,
       text: i,
@@ -24689,36 +24689,30 @@ this.ifd0Offset: ${this.ifd0Offset}, file.byteLength: ${n.byteLength}`), n.tiff 
       if (n.current) return;
       async function i() {
         if (new URLSearchParams(window.location.search).get("share-received") === "true") try {
-          const d = await caches.open("incoming-shares"), h = await d.match("/shared-file");
-          if (h) {
-            const m = await h.blob(), p = h.headers.get("x-file-name") || "shared-audio.mp3", b = new File([
-              m
-            ], p, {
-              type: m.type
-            });
+          const d = await caches.open("incoming-shares"), h = await d.keys(), m = [];
+          for (const p of h) if (p.url.includes("/shared-file-")) {
+            const b = await d.match(p), S = await (b == null ? void 0 : b.blob()), g = (b == null ? void 0 : b.headers.get("x-file-name")) || "unknown-file";
+            m.push(new File([
+              S
+            ], g, {
+              type: S == null ? void 0 : S.type
+            }));
+          }
+          if (m.length > 0) {
             n.current = true, s({
-              files: [
-                b
-              ],
+              files: m,
               type: "files"
-            }), await d.delete("/shared-file");
-            const S = new URL(window.location.href);
-            S.searchParams.delete("share-received"), window.history.replaceState({}, "", S.toString());
+            });
+            for (const b of h) await d.delete(b);
+            const p = new URL(window.location.href);
+            p.searchParams.delete("share-received"), window.history.replaceState({}, "", p.toString());
             return;
           }
         } catch (d) {
-          console.error("Failed to retrieve shared file from cache", d);
+          console.error("Failed to retrieve shared files:", d);
         }
         const o = wM();
-        if (o && o.type !== "none") {
-          n.current = true, s(o);
-          const d = new URL(window.location.href);
-          [
-            "title",
-            "text",
-            "url"
-          ].forEach((h) => d.searchParams.delete(h)), window.history.replaceState({}, "", d.toString());
-        }
+        o && (n.current = true, s(o));
       }
       i();
     }, [
@@ -29136,7 +29130,7 @@ this.ifd0Offset: ${this.ifd0Offset}, file.byteLength: ${n.byteLength}`), n.tiff 
         ...m
       }, `wallpaper-${h.current}`)
     });
-  }, H8 = v.lazy(() => Ne(() => import("./UpdatePrompt-DWSTiM3e.js").then(async (m) => {
+  }, H8 = v.lazy(() => Ne(() => import("./UpdatePrompt-BN4DGzBm.js").then(async (m) => {
     await m.__tla;
     return m;
   }), __vite__mapDeps([22,2,3,23,24,25,26,27,28])));
@@ -29145,7 +29139,7 @@ this.ifd0Offset: ${this.ifd0Offset}, file.byteLength: ${n.byteLength}`), n.tiff 
     xM(n.addSong, s, n.isInitialized), CM((S) => {
       if (S.files.length > 0 && (ye.success(s("shareTarget.filesReceived", {
         count: S.files.length
-      })), nc(S.files, n.addSong, s)), S.title || S.text || S.url) {
+      })), nc(S.files, n.addSong, s)), S.type === "search" && (S.title || S.text || S.url)) {
         const g = S.title || S.text || S.url;
         g && (n.setSearchQuery(g), ye.info(s("shareTarget.searchQuery", {
           query: g
