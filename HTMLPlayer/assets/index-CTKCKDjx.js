@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Bootstrap.icons-CUSYQcQF.js","assets/iconBase-C7gREx1u.js","assets/vendor-ui-WM1JXJ50.js","assets/vendor-react-qkC6yhPU.js","assets/css-gg.icons-B6pRdqbA.js","assets/MaterialDesign.icons-GQ926zqy.js","assets/Phosphor.icons-ByOaZePO.js","assets/RemixIcon.icons-DMiEMcX3.js","assets/SimpleLineIcons.icons-DsoM47tP.js","assets/TablerIcons.icons-2xlnnKTO.js","assets/vendor-icons-TO2v1PTS.js","assets/Clock.wallpaper-BsjELoQi.js","assets/GeometricPatterns.wallpaper-BoMwjRLy.js","assets/MusicViz.wallpaper-B-2HrCrA.js","assets/Particles.wallpaper-tNiuq6B5.js","assets/StarryNight.wallpaper-D-rxXUMD.js","assets/StaticBackground.wallpaper-JXRDfc83.js","assets/Waves.wallpaper-D2h8s6rJ.js","assets/Weather.wallpaper-DyMluOlm.js","assets/refloWavHelper-CFVSRtC7.js","assets/vendor-flo-rsMfiFqa.js","assets/floProcessor-D6X2FKGo.js","assets/UpdatePrompt-BVZlWewu.js","assets/vendor-i18n-WLbSf5LT.js","assets/vendor-uppy-CguFdeWP.js","assets/vendor-utils-jeg-bMVB.js","assets/vendor-audio-DrJdxnoN.js","assets/visualizers-D_6BBYWW.js","assets/UpdatePrompt-ClYSwnXr.css"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Bootstrap.icons-CUSYQcQF.js","assets/iconBase-C7gREx1u.js","assets/vendor-ui-WM1JXJ50.js","assets/vendor-react-qkC6yhPU.js","assets/css-gg.icons-B6pRdqbA.js","assets/MaterialDesign.icons-GQ926zqy.js","assets/Phosphor.icons-ByOaZePO.js","assets/RemixIcon.icons-DMiEMcX3.js","assets/SimpleLineIcons.icons-DsoM47tP.js","assets/TablerIcons.icons-2xlnnKTO.js","assets/vendor-icons-TO2v1PTS.js","assets/Clock.wallpaper-BsjELoQi.js","assets/GeometricPatterns.wallpaper-BoMwjRLy.js","assets/MusicViz.wallpaper-B-2HrCrA.js","assets/Particles.wallpaper-tNiuq6B5.js","assets/StarryNight.wallpaper-D-rxXUMD.js","assets/StaticBackground.wallpaper-JXRDfc83.js","assets/Waves.wallpaper-D2h8s6rJ.js","assets/Weather.wallpaper-DyMluOlm.js","assets/refloWavHelper-CFVSRtC7.js","assets/vendor-flo-rsMfiFqa.js","assets/floProcessor-D6X2FKGo.js","assets/UpdatePrompt-DpZuewmN.js","assets/vendor-i18n-WLbSf5LT.js","assets/vendor-uppy-CguFdeWP.js","assets/vendor-utils-jeg-bMVB.js","assets/vendor-audio-DrJdxnoN.js","assets/visualizers-D_6BBYWW.js","assets/UpdatePrompt-ClYSwnXr.css"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __typeError = (msg) => {
   throw TypeError(msg);
@@ -24691,19 +24691,19 @@ this.ifd0Offset: ${this.ifd0Offset}, file.byteLength: ${n.byteLength}`), n.tiff 
         if (new URLSearchParams(window.location.search).get("share-received") === "true") try {
           const d = await caches.open("incoming-shares"), h = await d.match("/shared-file");
           if (h) {
-            const m = await h.blob(), p = h.headers.get("x-file-name") || "shared-audio.mp3", b = new File([
+            const m = await h.blob(), p = h.headers.get("x-file-name"), b = p ? decodeURIComponent(p) : "shared-audio.mp3", S = new File([
               m
-            ], p, {
+            ], b, {
               type: m.type
             });
             n.current = true, s({
               files: [
-                b
+                S
               ],
               type: "files"
             }), await d.delete("/shared-file");
-            const S = new URL(window.location.href);
-            S.searchParams.delete("share-received"), window.history.replaceState({}, "", S.toString());
+            const g = new URL(window.location.href);
+            g.searchParams.delete("share-received"), window.history.replaceState({}, "", g.toString());
             return;
           }
         } catch (d) {
@@ -29136,7 +29136,7 @@ this.ifd0Offset: ${this.ifd0Offset}, file.byteLength: ${n.byteLength}`), n.tiff 
         ...m
       }, `wallpaper-${h.current}`)
     });
-  }, H8 = v.lazy(() => Ne(() => import("./UpdatePrompt-BVZlWewu.js").then(async (m) => {
+  }, H8 = v.lazy(() => Ne(() => import("./UpdatePrompt-DpZuewmN.js").then(async (m) => {
     await m.__tla;
     return m;
   }), __vite__mapDeps([22,2,3,23,24,25,26,27,28])));
