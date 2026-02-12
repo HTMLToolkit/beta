@@ -1,110 +1,116 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Fallback Metadata -->
+    <meta
+      name="description"
+      content="A modern music player interface with playlists, song management, and an amazing visualizer."
+    />
+    <meta
+      property="og:image"
+      content="https://nellowtcs.me/assets/icon-1024.png"
+    />
+    <meta
+      property="og:description"
+      content="A modern music player interface with playlists, song management, and an amazing visualizer."
+    />
+    <meta property="og:title" content="HTMLPlayer (beta)" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Fallback Metadata -->
-  <meta name="description"
-    content="A modern music player interface with playlists, song management, and an amazing visualizer." />
-  <meta property="og:image" content="https://nellowtcs.me/assets/icon-1024.png" />
-  <meta property="og:description"
-    content="A modern music player interface with playlists, song management, and an amazing visualizer." />
-  <meta property="og:title" content="HTMLPlayer (beta)" />
+    <script>
+      (function () {
+        // Vite will replace these exact strings during build
+        const isSingleFile = false;
+        const iconData = null;
 
-  <script>
-    (function () {
-      // Vite will replace these exact strings during build
-      const isSingleFile = false;
-      const iconData = null;
+        if (isSingleFile && iconData) {
+          const link =
+            document.querySelector("link[rel*='icon']") ||
+            document.createElement("link");
+          link.type = "image/png";
+          link.rel = "icon";
+          link.href = iconData;
+          document.head.appendChild(link);
 
-      if (isSingleFile && iconData) {
-        const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-        link.type = 'image/png';
-        link.rel = 'icon';
-        link.href = iconData;
-        document.head.appendChild(link);
-
-        const ogImage = document.querySelector('meta[property="og:image"]') || document.createElement('meta');
-        ogImage.setAttribute('property', 'og:image');
-        ogImage.content = iconData;
-        document.head.appendChild(ogImage);
-      }
-    })();
-  </script>
-
-  <!-- Default theme loaded first for instant styling and first load -->
-
-  <!-- Load user's saved theme and dark mode preference ASAP -->
-  <script>
-    (function () {
-      // Apply dark mode immediately if needed (before theme switching)
-      const savedMode = localStorage.getItem('themeMode') || 'auto';
-      if (savedMode === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else if (savedMode === 'auto') {
-        // Check system preference
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          document.documentElement.classList.add('dark');
+          const ogImage =
+            document.querySelector('meta[property="og:image"]') ||
+            document.createElement("meta");
+          ogImage.setAttribute("property", "og:image");
+          ogImage.content = iconData;
+          document.head.appendChild(ogImage);
         }
-      }
-    })();
-  </script>
+      })();
+    </script>
 
-  <title>HTMLPlayer</title>
-  <script type="module" crossorigin src="/beta/HTMLPlayer/assets/index-BUSArya0.js"></script>
-  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-react-qkC6yhPU.js">
-  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-ui-WM1JXJ50.js">
-  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-uppy-CguFdeWP.js">
-  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-i18n-WLbSf5LT.js">
-  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-utils-jeg-bMVB.js">
-  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-audio-DrJdxnoN.js">
-  <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/visualizers-D_6BBYWW.js">
-  <link rel="stylesheet" crossorigin href="/beta/HTMLPlayer/assets/index-RPwcfck-.css">
-<link rel="manifest" href="/beta/HTMLPlayer/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/beta/HTMLPlayer/registerSW.js"></script>
+    <!-- Default theme loaded first for instant styling and first load -->
+
+    <!-- Load user's saved theme and dark mode preference ASAP -->
+    <script>
+      (function () {
+        // Apply dark mode immediately if needed (before theme switching)
+        const savedMode = localStorage.getItem("themeMode") || "auto";
+        if (savedMode === "dark") {
+          document.documentElement.classList.add("dark");
+        } else if (savedMode === "auto") {
+          // Check system preference
+          if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          ) {
+            document.documentElement.classList.add("dark");
+          }
+        }
+      })();
+    </script>
+
+    <title>HTMLPlayer</title>
+    <script type="module" crossorigin src="/beta/HTMLPlayer/assets/index-B3itg-vA.js"></script>
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-react-C6Febm84.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-ui-BG0coi97.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-uppy-DElw6E-D.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-i18n-Knli4vfm.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-utils-2yTjqDOk.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-audio-DkF9nV6x.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/visualizers-DzIPSC5C.js">
+    <link rel="stylesheet" crossorigin href="/beta/HTMLPlayer/assets/index-RPwcfck-.css">
+  <link rel="manifest" href="/beta/HTMLPlayer/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/beta/HTMLPlayer/registerSW.js"></script>
 <meta name="theme-color" content="#00bfff">
 <link rel="icon" href="/beta/HTMLPlayer/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/beta/HTMLPlayer/apple-touch-icon-180x180.png"></head>
-<body>
-  <!-- Loading screen shown before React loads -->
-  <div id="loading-screen" class="loadingScreen">
-    <div class="loadingContent">
-      <div class="loadingSpinner"></div>
-      <h1 class="loadingTitle">HTMLPlayer</h1>
-      <p class="loadingText" id="loading-text">Loading the loading message...</p>
-
+  <body>
+    <!-- Loading screen shown before React loads -->
+    <div id="loading-screen" class="loadingScreen">
+      <div class="loadingContent">
+        <div class="loadingSpinner"></div>
+        <h1 class="loadingTitle">HTMLPlayer</h1>
+        <p class="loadingText" id="loading-text">
+          Loading the loading message...
+        </p>
+      </div>
     </div>
-  </div>
 
-  <div id="root"></div>
+    <div id="root"></div>
 
-  <!-- Load fun loading messages -->
-  <script>
-    (function () {
-      const userLang = (navigator.language || 'en').substring(0, 2);
-      const lang = (userLang === 'fr') ? 'fr' : 'en';
-      const loadingText = document.getElementById('loading-text');
+    <!-- Load fun loading messages -->
+    <script>
+      (function () {
+        const userLang = (navigator.language || "en").substring(0, 2);
+        const lang = userLang === "fr" ? "fr" : "en";
+        const loadingText = document.getElementById("loading-text");
 
-      const updateText = (messages) => {
-        if (loadingText && messages) {
-          const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-          loadingText.textContent = randomMessage;
-        }
-      };
+        const updateText = (messages) => {
+          if (loadingText && messages) {
+            const randomMessage =
+              messages[Math.floor(Math.random() * messages.length)];
+            loadingText.textContent = randomMessage;
+          }
+        };
 
-      // Statically replaced by the custom plugin
-      const inlined = null;
+        // Statically replaced by the custom plugin
+        const inlined = null;
+      })();
+    </script>
 
-      if (inlined) {
-        updateText(inlined[lang] || inlined.en);
-      } else {
-        fetch(`./locales/${lang}/loading-messages-${lang}.json`)
-          .then(res => res.json())
-          .then(updateText)
-          .catch(() => console.warn('Loading messages failed.'));
-      }
-    })();
-  </script>
-
-</body>
+  </body>
 </html>
