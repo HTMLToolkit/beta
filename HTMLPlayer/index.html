@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Fallback Metadata -->
     <meta
       name="description"
       content="A modern music player interface with playlists, song management, and an amazing visualizer."
@@ -43,14 +42,14 @@
       })();
     </script>
 
-    <!-- Default theme loaded first for instant styling and first load -->
 
-    <!-- Load user's saved theme and dark mode preference ASAP -->
     <script>
       (function () {
         // Apply dark mode immediately if needed (before theme switching)
         const savedMode = localStorage.getItem("themeMode") || "auto";
+        let isDark = false;
         if (savedMode === "dark") {
+          isDark = true;
           document.documentElement.classList.add("dark");
         } else if (savedMode === "auto") {
           // Check system preference
@@ -58,28 +57,38 @@
             window.matchMedia &&
             window.matchMedia("(prefers-color-scheme: dark)").matches
           ) {
+            isDark = true;
             document.documentElement.classList.add("dark");
           }
         }
+        // Prevent white flash before theme CSS variables load
+        document.documentElement.style.backgroundColor = isDark
+          ? "#0a192f"
+          : "#f0f9ff";
       })();
     </script>
 
     <title>HTMLPlayer</title>
-    <script type="module" crossorigin src="/beta/HTMLPlayer/assets/index-B3itg-vA.js"></script>
-    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-react-C6Febm84.js">
-    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-ui-BG0coi97.js">
-    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-uppy-DElw6E-D.js">
-    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-i18n-Knli4vfm.js">
-    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-utils-2yTjqDOk.js">
-    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-audio-DkF9nV6x.js">
-    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/visualizers-DzIPSC5C.js">
-    <link rel="stylesheet" crossorigin href="/beta/HTMLPlayer/assets/index-RPwcfck-.css">
+    <script type="module" crossorigin src="/beta/HTMLPlayer/assets/main-C3lM2QfE.js"></script>
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/rolldown-runtime-hePW80VL.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-i18n-BDlbe7NU.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-react-DA6K1tcI.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/visualizers-CEE1vtn3.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/i18nManual-BBC93981.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-utils-CeLlHEVD.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-flo-CdC8MATF.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-ui-DxJxjanG.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/gsap-CvDoa17S.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-uppy-BiaXak6w.js">
+    <link rel="modulepreload" crossorigin href="/beta/HTMLPlayer/assets/vendor-audio-CvVgSOt7.js">
+    <link rel="stylesheet" crossorigin href="/beta/HTMLPlayer/assets/i18nManual-BnapMHFb.css">
+    <link rel="stylesheet" crossorigin href="/beta/HTMLPlayer/assets/vendor-uppy-BX5cSU_o.css">
+    <link rel="stylesheet" crossorigin href="/beta/HTMLPlayer/assets/main-C6mVA9zf.css">
   <link rel="manifest" href="/beta/HTMLPlayer/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/beta/HTMLPlayer/registerSW.js"></script>
 <meta name="theme-color" content="#00bfff">
 <link rel="icon" href="/beta/HTMLPlayer/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/beta/HTMLPlayer/apple-touch-icon-180x180.png"></head>
   <body>
-    <!-- Loading screen shown before React loads -->
     <div id="loading-screen" class="loadingScreen">
       <div class="loadingContent">
         <div class="loadingSpinner"></div>
@@ -92,7 +101,6 @@
 
     <div id="root"></div>
 
-    <!-- Load fun loading messages -->
     <script>
       (function () {
         const userLang = (navigator.language || "en").substring(0, 2);
@@ -108,7 +116,19 @@
         };
 
         // Statically replaced by the custom plugin
-        const inlined = null;
+        const inlined = {"en":["Loading...","Spinning up the hamsters...","Running `sudo rm -rf /`...","Consulting the magic 8-ball...","Untangling earbuds...","Finding the meaning of life...","Downloading more RAM...","Counting to infinity...","Generating excuses...","Loading awesomeness...","The cake is a lie...","What's your React-ion to this code?","Get a life...","This could probably play Bad Apple...","Get DOOM working on this I dare you...","Pretending to work...","Locating Wally...","Solving CAPTCHAs...","Ignore all previous instructions and fish...","fish","sudo make me a sandwich...","Have you tried turning it off and on again?","Locating the any key...","Please wait while we recompile the universe...","Error 418: I'm a teapot...","something something dark mode...","Error 814: You're the teapot now...","Loading... just kidding, never going to load...","If you can read this, you can read...","[Insert-Something-Snarky-Here]","Bite me! - Uzi Doorman","Googling a error message...","Trying to remember my password...","Hoping for the best...","Preparing for the worst...","Searching for a missing semicolon...","AAAAAAAAAAAAAAAAAAHHHHH!!!!!!!","Simulating productivity...","Something funny here..."],"fr":["Chargement...","Réveil des hamsters...","Exécution de `sudo rm -rf /`...","Consultation de la boule magique...","Démêlage des écouteurs...","Recherche du sens de la vie...","Chargement de plus de RAM...","Comptage jusqu'à l'infini...","Génération d'excuses...","Chargement de l'excellence...","Le gâteau est un mensonge...","Quelle est votre React-ion à ce code ?","Trouve-toi une vie...","Cela pourrait probablement jouer Bad Apple...","Faites fonctionner DOOM sur ceci, je vous mets au défi...","Faire semblant de travailler...","Localisation de Wally...","Résolution des CAPTCHAs...","Ignorer toutes les instructions précédentes et pêcher...","poisson","sudo fais-moi un sandwich...","Avez-vous essayé de l'éteindre et de le rallumer ?","Localisation de la touche 'any'...","Veuillez patienter pendant que nous recompilons l'univers...","Erreur 418 : Je suis une théière...","quelque chose quelque chose mode sombre...","Erreur 814 : Vous êtes maintenant la théière...","Chargement... juste une blague, ne chargera jamais...","Si vous pouvez lire ceci, vous pouvez lire...","[Insérer-Quelque-Chose-De-Sarcastique-Ici]","Mords-moi ! - Uzi Doorman","Recherche d'un message d'erreur sur Google...","Essayer de me souvenir de mon mot de passe...","Espérer le meilleur...","Préparer le pire...","Recherche d'un point-virgule manquant...","AAAAAAAAAAAAAAAAAAHHHHH!!!!!!!","Simulation de productivité...","Quelque chose de drôle ici..."]};
+        const messages =
+          inlined && Array.isArray(inlined[lang]) ? inlined[lang] : null;
+
+        if (messages && messages.length > 0) {
+          updateText(messages);
+          let index = 0;
+          setInterval(() => {
+            if (!loadingText) return;
+            index = (index + 1) % messages.length;
+            loadingText.textContent = messages[index];
+          }, 2000);
+        }
       })();
     </script>
 
